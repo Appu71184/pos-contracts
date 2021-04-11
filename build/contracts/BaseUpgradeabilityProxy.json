@@ -1,0 +1,1528 @@
+{
+  "contractName": "BaseUpgradeabilityProxy",
+  "abi": [
+    {
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "fallback"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "implementation",
+          "type": "address"
+        }
+      ],
+      "name": "Upgraded",
+      "type": "event"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"implementation\",\"type\":\"address\"}],\"name\":\"Upgraded\",\"type\":\"event\"}],\"devdoc\":{\"details\":\"This contract implements a proxy that allows to change the implementation address to which it will delegate. Such a change is called an implementation upgrade.\",\"methods\":{},\"title\":\"BaseUpgradeabilityProxy\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/BaseUpgradeabilityProxy.sol\":\"BaseUpgradeabilityProxy\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/libs/Address.sol\":{\"keccak256\":\"0x29a348027acef5e7aff7520d971c85294a098d09c2fb18a4281d8f012e0f83b6\",\"urls\":[\"bzzr://d6306bd3440a83d95cacf3a49a1d5e2ee55a0f10ae4796b1a088989bbfa02d9a\",\"dweb:/ipfs/QmPRHPqhg2je9Keyo6yhye6n7PCpYEy2jtLwinmBWdpAyz\"]},\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/BaseUpgradeabilityProxy.sol\":{\"keccak256\":\"0x6bb268f587d519c9525d4f728412be20eb41ddbf361e370faf615c6333edf5d4\",\"urls\":[\"bzzr://775ae2c6663596937d439aed2f58456b4f9de37ef0a81ad7f37ce9195275360f\",\"dweb:/ipfs/QmRhkWe2Vn8nb2V77vU3SWqY7r9ki9opJHhumRu38SYaQW\"]},\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/Proxy.sol\":{\"keccak256\":\"0x96a895ef0545d209e1315f6ab9e798aaf5a2118b5e29705a68131e8da2fec389\",\"urls\":[\"bzzr://56c8499c596da996bbd56c55bde41d22ff70208ba68bae67f9c851fd17a32fa8\",\"dweb:/ipfs/Qme5DbuZFwrUbXiXvHyfWu1z1VoWQ4RtgsHL8PP8KD1JBn\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060ad8061001f6000396000f3fe6080604052600a600c565b005b60126020565b601e601a6022565b6053565b565b565b6000807f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc60001b9050805491505090565b3660008037600080366000845af43d6000803e80600081146073573d6000f35b3d6000fdfea265627a7a723058203d7a94e289636eed63a45b1c49d5403c83a9831aa93584055c7672b9fd9e17dd64736f6c634300050a0032",
+  "deployedBytecode": "0x6080604052600a600c565b005b60126020565b601e601a6022565b6053565b565b565b6000807f360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc60001b9050805491505090565b3660008037600080366000845af43d6000803e80600081146073573d6000f35b3d6000fdfea265627a7a723058203d7a94e289636eed63a45b1c49d5403c83a9831aa93584055c7672b9fd9e17dd64736f6c634300050a0032",
+  "sourceMap": "295:1680:33:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;295:1680:33;;;;;;;",
+  "deployedSourceMap": "295:1680:33:-;;;468:11:34;:9;:11::i;:::-;295:1680:33;2103:100:34;2143:15;:13;:15::i;:::-;2168:28;2178:17;:15;:17::i;:::-;2168:9;:28::i;:::-;2103:100::o;1957:41::-;:::o;990:176:33:-;1040:12;1064;800:66;1079:19;;1064:34;;1145:4;1139:11;1131:19;;1117:43;;:::o;917:819:34:-;1247:12;1244:1;1241;1228:32;1455:1;1452;1438:12;1435:1;1419:14;1414:3;1401:56;1531:14;1528:1;1525;1510:36;1567:6;1639:1;1634:36;;;;1703:14;1700:1;1693:25;1634:36;1653:14;1650:1;1643:25",
+  "source": "pragma solidity 0.5.10;\n\nimport \"./Proxy.sol\";\nimport \"../libs/Address.sol\";\n\n\n/**\n * @title BaseUpgradeabilityProxy\n * @dev This contract implements a proxy that allows to change the\n * implementation address to which it will delegate.\n * Such a change is called an implementation upgrade.\n */\ncontract BaseUpgradeabilityProxy is Proxy {\n    /**\n     * @dev Emitted when the implementation is upgraded.\n     * @param implementation Address of the new implementation.\n     */\n    event Upgraded(address indexed implementation);\n\n    /**\n     * @dev Storage slot with the address of the current implementation.\n     * This is the keccak-256 hash of \"eip1967.proxy.implementation\" subtracted by 1, and is\n     * validated in the constructor.\n     */\n    bytes32 internal constant IMPLEMENTATION_SLOT = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;\n\n    /**\n     * @dev Returns the current implementation.\n     * @return Address of the current implementation\n     */\n    function _implementation() internal view returns (address impl) {\n        bytes32 slot = IMPLEMENTATION_SLOT;\n        assembly {\n            impl := sload(slot)\n        }\n    }\n\n    /**\n     * @dev Upgrades the proxy to a new implementation.\n     * @param newImplementation Address of the new implementation.\n     */\n    function _upgradeTo(address newImplementation) internal {\n        _setImplementation(newImplementation);\n        emit Upgraded(newImplementation);\n    }\n\n    /**\n     * @dev Sets the implementation address of the proxy.\n     * @param newImplementation Address of the new implementation.\n     */\n    function _setImplementation(address newImplementation) internal {\n        require(\n            OpenZeppelinUpgradesAddress.isContract(newImplementation),\n            \"Cannot set a proxy implementation to a non-contract address\"\n        );\n\n        bytes32 slot = IMPLEMENTATION_SLOT;\n\n        assembly {\n            sstore(slot, newImplementation)\n        }\n    }\n}\n",
+  "sourcePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/BaseUpgradeabilityProxy.sol",
+  "ast": {
+    "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/BaseUpgradeabilityProxy.sol",
+    "exportedSymbols": {
+      "BaseUpgradeabilityProxy": [
+        18904
+      ]
+    },
+    "id": 18905,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 18848,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:33"
+      },
+      {
+        "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/Proxy.sol",
+        "file": "./Proxy.sol",
+        "id": 18849,
+        "nodeType": "ImportDirective",
+        "scope": 18905,
+        "sourceUnit": 18943,
+        "src": "25:21:33",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/libs/Address.sol",
+        "file": "../libs/Address.sol",
+        "id": 18850,
+        "nodeType": "ImportDirective",
+        "scope": 18905,
+        "sourceUnit": 16813,
+        "src": "47:29:33",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 18851,
+              "name": "Proxy",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 18942,
+              "src": "331:5:33",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Proxy_$18942",
+                "typeString": "contract Proxy"
+              }
+            },
+            "id": 18852,
+            "nodeType": "InheritanceSpecifier",
+            "src": "331:5:33"
+          }
+        ],
+        "contractDependencies": [
+          18942
+        ],
+        "contractKind": "contract",
+        "documentation": "@title BaseUpgradeabilityProxy\n@dev This contract implements a proxy that allows to change the\nimplementation address to which it will delegate.\nSuch a change is called an implementation upgrade.",
+        "fullyImplemented": true,
+        "id": 18904,
+        "linearizedBaseContracts": [
+          18904,
+          18942
+        ],
+        "name": "BaseUpgradeabilityProxy",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@dev Emitted when the implementation is upgraded.\n@param implementation Address of the new implementation.",
+            "id": 18856,
+            "name": "Upgraded",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 18855,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 18854,
+                  "indexed": true,
+                  "name": "implementation",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 18856,
+                  "src": "495:30:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 18853,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "495:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "494:32:33"
+            },
+            "src": "480:47:33"
+          },
+          {
+            "constant": true,
+            "id": 18859,
+            "name": "IMPLEMENTATION_SLOT",
+            "nodeType": "VariableDeclaration",
+            "scope": 18904,
+            "src": "752:114:33",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 18857,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "752:7:33",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "307833363038393461313362613161333231303636376338323834393264623938646361336532303736636333373335613932306133636135303564333832626263",
+              "id": 18858,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "800:66:33",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_24440054405305269366569402256811496959409073762505157381672968839269610695612_by_1",
+                "typeString": "int_const 2444...(69 digits omitted)...5612"
+              },
+              "value": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+            },
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 18869,
+              "nodeType": "Block",
+              "src": "1054:112:33",
+              "statements": [
+                {
+                  "assignments": [
+                    18865
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 18865,
+                      "name": "slot",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 18869,
+                      "src": "1064:12:33",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      },
+                      "typeName": {
+                        "id": 18864,
+                        "name": "bytes32",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1064:7:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 18867,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 18866,
+                    "name": "IMPLEMENTATION_SLOT",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 18859,
+                    "src": "1079:19:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1064:34:33"
+                },
+                {
+                  "externalReferences": [
+                    {
+                      "impl": {
+                        "declaration": 18862,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1131:4:33",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "slot": {
+                        "declaration": 18865,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1145:4:33",
+                        "valueSize": 1
+                      }
+                    }
+                  ],
+                  "id": 18868,
+                  "nodeType": "InlineAssembly",
+                  "operations": "{ impl := sload(slot) }",
+                  "src": "1108:52:33"
+                }
+              ]
+            },
+            "documentation": "@dev Returns the current implementation.\n@return Address of the current implementation",
+            "id": 18870,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_implementation",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 18860,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1014:2:33"
+            },
+            "returnParameters": {
+              "id": 18863,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 18862,
+                  "name": "impl",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 18870,
+                  "src": "1040:12:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 18861,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1040:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1039:14:33"
+            },
+            "scope": 18904,
+            "src": "990:176:33",
+            "stateMutability": "view",
+            "superFunction": 18918,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 18883,
+              "nodeType": "Block",
+              "src": "1367:96:33",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 18876,
+                        "name": "newImplementation",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 18872,
+                        "src": "1396:17:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 18875,
+                      "name": "_setImplementation",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 18903,
+                      "src": "1377:18:33",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 18877,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1377:37:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 18878,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1377:37:33"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 18880,
+                        "name": "newImplementation",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 18872,
+                        "src": "1438:17:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 18879,
+                      "name": "Upgraded",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 18856,
+                      "src": "1429:8:33",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 18881,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1429:27:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 18882,
+                  "nodeType": "EmitStatement",
+                  "src": "1424:32:33"
+                }
+              ]
+            },
+            "documentation": "@dev Upgrades the proxy to a new implementation.\n@param newImplementation Address of the new implementation.",
+            "id": 18884,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_upgradeTo",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 18873,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 18872,
+                  "name": "newImplementation",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 18884,
+                  "src": "1331:25:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 18871,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1331:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1330:27:33"
+            },
+            "returnParameters": {
+              "id": 18874,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1367:0:33"
+            },
+            "scope": 18904,
+            "src": "1311:152:33",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 18902,
+              "nodeType": "Block",
+              "src": "1674:299:33",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 18892,
+                            "name": "newImplementation",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 18886,
+                            "src": "1744:17:33",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 18890,
+                            "name": "OpenZeppelinUpgradesAddress",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 16812,
+                            "src": "1705:27:33",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_contract$_OpenZeppelinUpgradesAddress_$16812_$",
+                              "typeString": "type(library OpenZeppelinUpgradesAddress)"
+                            }
+                          },
+                          "id": 18891,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isContract",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 16811,
+                          "src": "1705:38:33",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_bool_$",
+                            "typeString": "function (address) view returns (bool)"
+                          }
+                        },
+                        "id": 18893,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1705:57:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "43616e6e6f742073657420612070726f787920696d706c656d656e746174696f6e20746f2061206e6f6e2d636f6e74726163742061646472657373",
+                        "id": 18894,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1776:61:33",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_b5145a64ce8c406e5785204fe5b300f0ceda96d6636350b38fdccb9cd8c0c37c",
+                          "typeString": "literal_string \"Cannot set a proxy implementation to a non-contract address\""
+                        },
+                        "value": "Cannot set a proxy implementation to a non-contract address"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_b5145a64ce8c406e5785204fe5b300f0ceda96d6636350b38fdccb9cd8c0c37c",
+                          "typeString": "literal_string \"Cannot set a proxy implementation to a non-contract address\""
+                        }
+                      ],
+                      "id": 18889,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        19044,
+                        19045
+                      ],
+                      "referencedDeclaration": 19045,
+                      "src": "1684:7:33",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 18895,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1684:163:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 18896,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1684:163:33"
+                },
+                {
+                  "assignments": [
+                    18898
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 18898,
+                      "name": "slot",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 18902,
+                      "src": "1858:12:33",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      },
+                      "typeName": {
+                        "id": 18897,
+                        "name": "bytes32",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1858:7:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 18900,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 18899,
+                    "name": "IMPLEMENTATION_SLOT",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 18859,
+                    "src": "1873:19:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1858:34:33"
+                },
+                {
+                  "externalReferences": [
+                    {
+                      "slot": {
+                        "declaration": 18898,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1933:4:33",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "newImplementation": {
+                        "declaration": 18886,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1939:17:33",
+                        "valueSize": 1
+                      }
+                    }
+                  ],
+                  "id": 18901,
+                  "nodeType": "InlineAssembly",
+                  "operations": "{\n    sstore(slot, newImplementation)\n}",
+                  "src": "1903:64:33"
+                }
+              ]
+            },
+            "documentation": "@dev Sets the implementation address of the proxy.\n@param newImplementation Address of the new implementation.",
+            "id": 18903,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_setImplementation",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 18887,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 18886,
+                  "name": "newImplementation",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 18903,
+                  "src": "1638:25:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 18885,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1638:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1637:27:33"
+            },
+            "returnParameters": {
+              "id": 18888,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1674:0:33"
+            },
+            "scope": 18904,
+            "src": "1610:363:33",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 18905,
+        "src": "295:1680:33"
+      }
+    ],
+    "src": "0:1976:33"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/BaseUpgradeabilityProxy.sol",
+    "exportedSymbols": {
+      "BaseUpgradeabilityProxy": [
+        18904
+      ]
+    },
+    "id": 18905,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 18848,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:33"
+      },
+      {
+        "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/Proxy.sol",
+        "file": "./Proxy.sol",
+        "id": 18849,
+        "nodeType": "ImportDirective",
+        "scope": 18905,
+        "sourceUnit": 18943,
+        "src": "25:21:33",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/libs/Address.sol",
+        "file": "../libs/Address.sol",
+        "id": 18850,
+        "nodeType": "ImportDirective",
+        "scope": 18905,
+        "sourceUnit": 16813,
+        "src": "47:29:33",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 18851,
+              "name": "Proxy",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 18942,
+              "src": "331:5:33",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Proxy_$18942",
+                "typeString": "contract Proxy"
+              }
+            },
+            "id": 18852,
+            "nodeType": "InheritanceSpecifier",
+            "src": "331:5:33"
+          }
+        ],
+        "contractDependencies": [
+          18942
+        ],
+        "contractKind": "contract",
+        "documentation": "@title BaseUpgradeabilityProxy\n@dev This contract implements a proxy that allows to change the\nimplementation address to which it will delegate.\nSuch a change is called an implementation upgrade.",
+        "fullyImplemented": true,
+        "id": 18904,
+        "linearizedBaseContracts": [
+          18904,
+          18942
+        ],
+        "name": "BaseUpgradeabilityProxy",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "anonymous": false,
+            "documentation": "@dev Emitted when the implementation is upgraded.\n@param implementation Address of the new implementation.",
+            "id": 18856,
+            "name": "Upgraded",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 18855,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 18854,
+                  "indexed": true,
+                  "name": "implementation",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 18856,
+                  "src": "495:30:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 18853,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "495:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "494:32:33"
+            },
+            "src": "480:47:33"
+          },
+          {
+            "constant": true,
+            "id": 18859,
+            "name": "IMPLEMENTATION_SLOT",
+            "nodeType": "VariableDeclaration",
+            "scope": 18904,
+            "src": "752:114:33",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 18857,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "752:7:33",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "307833363038393461313362613161333231303636376338323834393264623938646361336532303736636333373335613932306133636135303564333832626263",
+              "id": 18858,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "800:66:33",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_24440054405305269366569402256811496959409073762505157381672968839269610695612_by_1",
+                "typeString": "int_const 2444...(69 digits omitted)...5612"
+              },
+              "value": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+            },
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 18869,
+              "nodeType": "Block",
+              "src": "1054:112:33",
+              "statements": [
+                {
+                  "assignments": [
+                    18865
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 18865,
+                      "name": "slot",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 18869,
+                      "src": "1064:12:33",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      },
+                      "typeName": {
+                        "id": 18864,
+                        "name": "bytes32",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1064:7:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 18867,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 18866,
+                    "name": "IMPLEMENTATION_SLOT",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 18859,
+                    "src": "1079:19:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1064:34:33"
+                },
+                {
+                  "externalReferences": [
+                    {
+                      "impl": {
+                        "declaration": 18862,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1131:4:33",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "slot": {
+                        "declaration": 18865,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1145:4:33",
+                        "valueSize": 1
+                      }
+                    }
+                  ],
+                  "id": 18868,
+                  "nodeType": "InlineAssembly",
+                  "operations": "{ impl := sload(slot) }",
+                  "src": "1108:52:33"
+                }
+              ]
+            },
+            "documentation": "@dev Returns the current implementation.\n@return Address of the current implementation",
+            "id": 18870,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_implementation",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 18860,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1014:2:33"
+            },
+            "returnParameters": {
+              "id": 18863,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 18862,
+                  "name": "impl",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 18870,
+                  "src": "1040:12:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 18861,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1040:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1039:14:33"
+            },
+            "scope": 18904,
+            "src": "990:176:33",
+            "stateMutability": "view",
+            "superFunction": 18918,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 18883,
+              "nodeType": "Block",
+              "src": "1367:96:33",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 18876,
+                        "name": "newImplementation",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 18872,
+                        "src": "1396:17:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 18875,
+                      "name": "_setImplementation",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 18903,
+                      "src": "1377:18:33",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 18877,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1377:37:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 18878,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1377:37:33"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 18880,
+                        "name": "newImplementation",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 18872,
+                        "src": "1438:17:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 18879,
+                      "name": "Upgraded",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 18856,
+                      "src": "1429:8:33",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
+                        "typeString": "function (address)"
+                      }
+                    },
+                    "id": 18881,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1429:27:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 18882,
+                  "nodeType": "EmitStatement",
+                  "src": "1424:32:33"
+                }
+              ]
+            },
+            "documentation": "@dev Upgrades the proxy to a new implementation.\n@param newImplementation Address of the new implementation.",
+            "id": 18884,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_upgradeTo",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 18873,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 18872,
+                  "name": "newImplementation",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 18884,
+                  "src": "1331:25:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 18871,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1331:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1330:27:33"
+            },
+            "returnParameters": {
+              "id": 18874,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1367:0:33"
+            },
+            "scope": 18904,
+            "src": "1311:152:33",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 18902,
+              "nodeType": "Block",
+              "src": "1674:299:33",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "arguments": [
+                          {
+                            "argumentTypes": null,
+                            "id": 18892,
+                            "name": "newImplementation",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 18886,
+                            "src": "1744:17:33",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          }
+                        ],
+                        "expression": {
+                          "argumentTypes": [
+                            {
+                              "typeIdentifier": "t_address",
+                              "typeString": "address"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 18890,
+                            "name": "OpenZeppelinUpgradesAddress",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 16812,
+                            "src": "1705:27:33",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_contract$_OpenZeppelinUpgradesAddress_$16812_$",
+                              "typeString": "type(library OpenZeppelinUpgradesAddress)"
+                            }
+                          },
+                          "id": 18891,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "isContract",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 16811,
+                          "src": "1705:38:33",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_function_internal_view$_t_address_$returns$_t_bool_$",
+                            "typeString": "function (address) view returns (bool)"
+                          }
+                        },
+                        "id": 18893,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "kind": "functionCall",
+                        "lValueRequested": false,
+                        "names": [],
+                        "nodeType": "FunctionCall",
+                        "src": "1705:57:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "43616e6e6f742073657420612070726f787920696d706c656d656e746174696f6e20746f2061206e6f6e2d636f6e74726163742061646472657373",
+                        "id": 18894,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "1776:61:33",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_b5145a64ce8c406e5785204fe5b300f0ceda96d6636350b38fdccb9cd8c0c37c",
+                          "typeString": "literal_string \"Cannot set a proxy implementation to a non-contract address\""
+                        },
+                        "value": "Cannot set a proxy implementation to a non-contract address"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_b5145a64ce8c406e5785204fe5b300f0ceda96d6636350b38fdccb9cd8c0c37c",
+                          "typeString": "literal_string \"Cannot set a proxy implementation to a non-contract address\""
+                        }
+                      ],
+                      "id": 18889,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        19044,
+                        19045
+                      ],
+                      "referencedDeclaration": 19045,
+                      "src": "1684:7:33",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 18895,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1684:163:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 18896,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1684:163:33"
+                },
+                {
+                  "assignments": [
+                    18898
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 18898,
+                      "name": "slot",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 18902,
+                      "src": "1858:12:33",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      },
+                      "typeName": {
+                        "id": 18897,
+                        "name": "bytes32",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1858:7:33",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 18900,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 18899,
+                    "name": "IMPLEMENTATION_SLOT",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 18859,
+                    "src": "1873:19:33",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1858:34:33"
+                },
+                {
+                  "externalReferences": [
+                    {
+                      "slot": {
+                        "declaration": 18898,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1933:4:33",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "newImplementation": {
+                        "declaration": 18886,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1939:17:33",
+                        "valueSize": 1
+                      }
+                    }
+                  ],
+                  "id": 18901,
+                  "nodeType": "InlineAssembly",
+                  "operations": "{\n    sstore(slot, newImplementation)\n}",
+                  "src": "1903:64:33"
+                }
+              ]
+            },
+            "documentation": "@dev Sets the implementation address of the proxy.\n@param newImplementation Address of the new implementation.",
+            "id": 18903,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_setImplementation",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 18887,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 18886,
+                  "name": "newImplementation",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 18903,
+                  "src": "1638:25:33",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 18885,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1638:7:33",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1637:27:33"
+            },
+            "returnParameters": {
+              "id": 18888,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1674:0:33"
+            },
+            "scope": 18904,
+            "src": "1610:363:33",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 18905,
+        "src": "295:1680:33"
+      }
+    ],
+    "src": "0:1976:33"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.10+commit.5a6ea5b1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.1",
+  "updatedAt": "2021-04-11T17:55:36.110Z",
+  "devdoc": {
+    "details": "This contract implements a proxy that allows to change the implementation address to which it will delegate. Such a change is called an implementation upgrade.",
+    "methods": {},
+    "title": "BaseUpgradeabilityProxy"
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

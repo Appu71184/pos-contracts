@@ -1,0 +1,365 @@
+{
+  "contractName": "ITxPermission",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "",
+          "type": "address[]"
+        },
+        {
+          "name": "",
+          "type": "address"
+        },
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"\",\"type\":\"address[]\"},{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"address\"}],\"name\":\"initialize\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/interfaces/ITxPermission.sol\":\"ITxPermission\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/interfaces/ITxPermission.sol\":{\"keccak256\":\"0x59c1948393e69d5ad2ad189028d5b3659879ec9129eec320dcc99618713d23f1\",\"urls\":[\"bzzr://9e8fc692deb7efb33e7527c23d9ed27bb61b72cdecf91ecf4cb7b3e4f22014ae\",\"dweb:/ipfs/QmdJ7PDrWEyuJduJ3iToLdRjRaVXAhgJPHSvLFDCZxAb5p\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity 0.5.10;\n\n\ninterface ITxPermission {\n    function initialize(address[] calldata, address, address) external;\n}\n",
+  "sourcePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/interfaces/ITxPermission.sol",
+  "ast": {
+    "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/interfaces/ITxPermission.sol",
+    "exportedSymbols": {
+      "ITxPermission": [
+        16546
+      ]
+    },
+    "id": 16547,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 16535,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:26"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 16546,
+        "linearizedBaseContracts": [
+          16546
+        ],
+        "name": "ITxPermission",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 16545,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16543,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16538,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16545,
+                  "src": "76:18:26",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_calldata_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 16536,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "76:7:26",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 16537,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "76:9:26",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 16540,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16545,
+                  "src": "96:7:26",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 16539,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "96:7:26",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 16542,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16545,
+                  "src": "105:7:26",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 16541,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "105:7:26",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "75:38:26"
+            },
+            "returnParameters": {
+              "id": 16544,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "122:0:26"
+            },
+            "scope": 16546,
+            "src": "56:67:26",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 16547,
+        "src": "26:99:26"
+      }
+    ],
+    "src": "0:126:26"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/interfaces/ITxPermission.sol",
+    "exportedSymbols": {
+      "ITxPermission": [
+        16546
+      ]
+    },
+    "id": 16547,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 16535,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:26"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 16546,
+        "linearizedBaseContracts": [
+          16546
+        ],
+        "name": "ITxPermission",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 16545,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16543,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16538,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16545,
+                  "src": "76:18:26",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_calldata_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 16536,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "76:7:26",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 16537,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "76:9:26",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 16540,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16545,
+                  "src": "96:7:26",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 16539,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "96:7:26",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 16542,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16545,
+                  "src": "105:7:26",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 16541,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "105:7:26",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "75:38:26"
+            },
+            "returnParameters": {
+              "id": 16544,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "122:0:26"
+            },
+            "scope": 16546,
+            "src": "56:67:26",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 16547,
+        "src": "26:99:26"
+      }
+    ],
+    "src": "0:126:26"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.10+commit.5a6ea5b1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.1",
+  "updatedAt": "2021-04-11T17:55:36.037Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

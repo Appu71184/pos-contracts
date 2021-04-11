@@ -1,0 +1,462 @@
+{
+  "contractName": "UpgradeabilityAdmin",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeabilityAdmin.sol\":\"UpgradeabilityAdmin\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeabilityAdmin.sol\":{\"keccak256\":\"0x9addb17fda1bc4c4f8ba64e929be2acdb29472f9d3cfe18491852c0617d20169\",\"urls\":[\"bzzr://c0af15280f0b0edeedb355bea94acfaa3142e361b61f8356937ca1b039f131dd\",\"dweb:/ipfs/QmRmtnWMBvXYFBNppWcEdVTakMwPgqB4JhnXgMuT48yEou\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603e80601d6000396000f3fe6080604052600080fdfea265627a7a7230582030b33f3caa3917580a6488540353b353abdfd1181ffd5f2fe15aad44c499370164736f6c634300050a0032",
+  "deployedBytecode": "0x6080604052600080fdfea265627a7a7230582030b33f3caa3917580a6488540353b353abdfd1181ffd5f2fe15aad44c499370164736f6c634300050a0032",
+  "sourceMap": "26:502:35:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:502:35;;;;;;;",
+  "deployedSourceMap": "26:502:35:-;;;;;",
+  "source": "pragma solidity 0.5.10;\n\n\ncontract UpgradeabilityAdmin {\n    /**\n     * @dev Storage slot with the admin of the contract.\n     * This is the keccak-256 hash of \"eip1967.proxy.admin\" subtracted by 1.\n     */\n    bytes32 internal constant ADMIN_SLOT = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;\n\n    /**\n     * @return The admin slot.\n     */\n    function _admin() internal view returns (address adm) {\n        bytes32 slot = ADMIN_SLOT;\n        assembly {\n            adm := sload(slot)\n        }\n    }\n}\n",
+  "sourcePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeabilityAdmin.sol",
+  "ast": {
+    "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeabilityAdmin.sol",
+    "exportedSymbols": {
+      "UpgradeabilityAdmin": [
+        18959
+      ]
+    },
+    "id": 18960,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 18944,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:35"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 18959,
+        "linearizedBaseContracts": [
+          18959
+        ],
+        "name": "UpgradeabilityAdmin",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 18947,
+            "name": "ADMIN_SLOT",
+            "nodeType": "VariableDeclaration",
+            "scope": 18959,
+            "src": "211:105:35",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 18945,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "211:7:35",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "307862353331323736383461353638623331373361653133623966386136303136653234336536336236653865653131373864366137313738353062356436313033",
+              "id": 18946,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "250:66:35",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_81955473079516046949633743016697847541294818689821282749996681496272635257091_by_1",
+                "typeString": "int_const 8195...(69 digits omitted)...7091"
+              },
+              "value": "0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103"
+            },
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 18957,
+              "nodeType": "Block",
+              "src": "424:102:35",
+              "statements": [
+                {
+                  "assignments": [
+                    18953
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 18953,
+                      "name": "slot",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 18957,
+                      "src": "434:12:35",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      },
+                      "typeName": {
+                        "id": 18952,
+                        "name": "bytes32",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "434:7:35",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 18955,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 18954,
+                    "name": "ADMIN_SLOT",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 18947,
+                    "src": "449:10:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "434:25:35"
+                },
+                {
+                  "externalReferences": [
+                    {
+                      "adm": {
+                        "declaration": 18950,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "492:3:35",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "slot": {
+                        "declaration": 18953,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "505:4:35",
+                        "valueSize": 1
+                      }
+                    }
+                  ],
+                  "id": 18956,
+                  "nodeType": "InlineAssembly",
+                  "operations": "{ adm := sload(slot) }",
+                  "src": "469:51:35"
+                }
+              ]
+            },
+            "documentation": "@return The admin slot.",
+            "id": 18958,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_admin",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 18948,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "385:2:35"
+            },
+            "returnParameters": {
+              "id": 18951,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 18950,
+                  "name": "adm",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 18958,
+                  "src": "411:11:35",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 18949,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "411:7:35",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "410:13:35"
+            },
+            "scope": 18959,
+            "src": "370:156:35",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 18960,
+        "src": "26:502:35"
+      }
+    ],
+    "src": "0:529:35"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeabilityAdmin.sol",
+    "exportedSymbols": {
+      "UpgradeabilityAdmin": [
+        18959
+      ]
+    },
+    "id": 18960,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 18944,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:35"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 18959,
+        "linearizedBaseContracts": [
+          18959
+        ],
+        "name": "UpgradeabilityAdmin",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 18947,
+            "name": "ADMIN_SLOT",
+            "nodeType": "VariableDeclaration",
+            "scope": 18959,
+            "src": "211:105:35",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes32",
+              "typeString": "bytes32"
+            },
+            "typeName": {
+              "id": 18945,
+              "name": "bytes32",
+              "nodeType": "ElementaryTypeName",
+              "src": "211:7:35",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes32",
+                "typeString": "bytes32"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "307862353331323736383461353638623331373361653133623966386136303136653234336536336236653865653131373864366137313738353062356436313033",
+              "id": 18946,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "250:66:35",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_81955473079516046949633743016697847541294818689821282749996681496272635257091_by_1",
+                "typeString": "int_const 8195...(69 digits omitted)...7091"
+              },
+              "value": "0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103"
+            },
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 18957,
+              "nodeType": "Block",
+              "src": "424:102:35",
+              "statements": [
+                {
+                  "assignments": [
+                    18953
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 18953,
+                      "name": "slot",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 18957,
+                      "src": "434:12:35",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      },
+                      "typeName": {
+                        "id": 18952,
+                        "name": "bytes32",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "434:7:35",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 18955,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "id": 18954,
+                    "name": "ADMIN_SLOT",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 18947,
+                    "src": "449:10:35",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "434:25:35"
+                },
+                {
+                  "externalReferences": [
+                    {
+                      "adm": {
+                        "declaration": 18950,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "492:3:35",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "slot": {
+                        "declaration": 18953,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "505:4:35",
+                        "valueSize": 1
+                      }
+                    }
+                  ],
+                  "id": 18956,
+                  "nodeType": "InlineAssembly",
+                  "operations": "{ adm := sload(slot) }",
+                  "src": "469:51:35"
+                }
+              ]
+            },
+            "documentation": "@return The admin slot.",
+            "id": 18958,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "_admin",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 18948,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "385:2:35"
+            },
+            "returnParameters": {
+              "id": 18951,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 18950,
+                  "name": "adm",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 18958,
+                  "src": "411:11:35",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 18949,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "411:7:35",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "410:13:35"
+            },
+            "scope": 18959,
+            "src": "370:156:35",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 18960,
+        "src": "26:502:35"
+      }
+    ],
+    "src": "0:529:35"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.10+commit.5a6ea5b1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.1",
+  "updatedAt": "2021-04-11T17:55:36.112Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

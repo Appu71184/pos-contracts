@@ -1,0 +1,466 @@
+{
+  "contractName": "UpgradeableOwned",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeableOwned.sol\":\"UpgradeableOwned\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeabilityAdmin.sol\":{\"keccak256\":\"0x9addb17fda1bc4c4f8ba64e929be2acdb29472f9d3cfe18491852c0617d20169\",\"urls\":[\"bzzr://c0af15280f0b0edeedb355bea94acfaa3142e361b61f8356937ca1b039f131dd\",\"dweb:/ipfs/QmRmtnWMBvXYFBNppWcEdVTakMwPgqB4JhnXgMuT48yEou\"]},\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeableOwned.sol\":{\"keccak256\":\"0x73510448e23835a18719cd4b087f66c839bcb2d6b11b5a82e84f0a5e4ed6ad78\",\"urls\":[\"bzzr://302da89b7ac42ede7da35b64062e44ed04e1bdbd6066972dfa342445b23d2cb7\",\"dweb:/ipfs/QmTYnqfmNRdAz2QQhZAZcFRV8a34eBhmFfN9gXx9xRAKTr\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603e80601d6000396000f3fe6080604052600080fdfea265627a7a7230582044d527f9f50f67d05f07a831d589be0dc2da4770f8c07b9af5ca82ce57dab21c64736f6c634300050a0032",
+  "deployedBytecode": "0x6080604052600080fdfea265627a7a7230582044d527f9f50f67d05f07a831d589be0dc2da4770f8c07b9af5ca82ce57dab21c64736f6c634300050a0032",
+  "sourceMap": "63:221:37:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;63:221:37;;;;;;;",
+  "deployedSourceMap": "63:221:37:-;;;;;",
+  "source": "pragma solidity 0.5.10;\n\nimport \"./UpgradeabilityAdmin.sol\";\n\n\ncontract UpgradeableOwned is UpgradeabilityAdmin {\n    /// @dev Access check: revert unless `msg.sender` is the owner of the contract.\n    modifier onlyOwner() {\n        require(msg.sender == _admin());\n        _;\n    }\n}\n",
+  "sourcePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeableOwned.sol",
+  "ast": {
+    "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeableOwned.sol",
+    "exportedSymbols": {
+      "UpgradeableOwned": [
+        19026
+      ]
+    },
+    "id": 19027,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 19010,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:37"
+      },
+      {
+        "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeabilityAdmin.sol",
+        "file": "./UpgradeabilityAdmin.sol",
+        "id": 19011,
+        "nodeType": "ImportDirective",
+        "scope": 19027,
+        "sourceUnit": 18960,
+        "src": "25:35:37",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 19012,
+              "name": "UpgradeabilityAdmin",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 18959,
+              "src": "92:19:37",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_UpgradeabilityAdmin_$18959",
+                "typeString": "contract UpgradeabilityAdmin"
+              }
+            },
+            "id": 19013,
+            "nodeType": "InheritanceSpecifier",
+            "src": "92:19:37"
+          }
+        ],
+        "contractDependencies": [
+          18959
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 19026,
+        "linearizedBaseContracts": [
+          19026,
+          18959
+        ],
+        "name": "UpgradeableOwned",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 19024,
+              "nodeType": "Block",
+              "src": "223:59:37",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 19020,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 19016,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 19041,
+                            "src": "241:3:37",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 19017,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "241:10:37",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [],
+                          "expression": {
+                            "argumentTypes": [],
+                            "id": 19018,
+                            "name": "_admin",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 18958,
+                            "src": "255:6:37",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
+                              "typeString": "function () view returns (address)"
+                            }
+                          },
+                          "id": 19019,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "255:8:37",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "241:22:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 19015,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        19044,
+                        19045
+                      ],
+                      "referencedDeclaration": 19044,
+                      "src": "233:7:37",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 19021,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "233:31:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 19022,
+                  "nodeType": "ExpressionStatement",
+                  "src": "233:31:37"
+                },
+                {
+                  "id": 19023,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "274:1:37"
+                }
+              ]
+            },
+            "documentation": "@dev Access check: revert unless `msg.sender` is the owner of the contract.",
+            "id": 19025,
+            "name": "onlyOwner",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 19014,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "220:2:37"
+            },
+            "src": "202:80:37",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 19027,
+        "src": "63:221:37"
+      }
+    ],
+    "src": "0:285:37"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeableOwned.sol",
+    "exportedSymbols": {
+      "UpgradeableOwned": [
+        19026
+      ]
+    },
+    "id": 19027,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 19010,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:37"
+      },
+      {
+        "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/upgradeability/UpgradeabilityAdmin.sol",
+        "file": "./UpgradeabilityAdmin.sol",
+        "id": 19011,
+        "nodeType": "ImportDirective",
+        "scope": 19027,
+        "sourceUnit": 18960,
+        "src": "25:35:37",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 19012,
+              "name": "UpgradeabilityAdmin",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 18959,
+              "src": "92:19:37",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_UpgradeabilityAdmin_$18959",
+                "typeString": "contract UpgradeabilityAdmin"
+              }
+            },
+            "id": 19013,
+            "nodeType": "InheritanceSpecifier",
+            "src": "92:19:37"
+          }
+        ],
+        "contractDependencies": [
+          18959
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 19026,
+        "linearizedBaseContracts": [
+          19026,
+          18959
+        ],
+        "name": "UpgradeableOwned",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 19024,
+              "nodeType": "Block",
+              "src": "223:59:37",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 19020,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 19016,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 19041,
+                            "src": "241:3:37",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 19017,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "241:10:37",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address_payable",
+                            "typeString": "address payable"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [],
+                          "expression": {
+                            "argumentTypes": [],
+                            "id": 19018,
+                            "name": "_admin",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 18958,
+                            "src": "255:6:37",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_function_internal_view$__$returns$_t_address_$",
+                              "typeString": "function () view returns (address)"
+                            }
+                          },
+                          "id": 19019,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "kind": "functionCall",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "255:8:37",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "241:22:37",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 19015,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        19044,
+                        19045
+                      ],
+                      "referencedDeclaration": 19044,
+                      "src": "233:7:37",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 19021,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "233:31:37",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 19022,
+                  "nodeType": "ExpressionStatement",
+                  "src": "233:31:37"
+                },
+                {
+                  "id": 19023,
+                  "nodeType": "PlaceholderStatement",
+                  "src": "274:1:37"
+                }
+              ]
+            },
+            "documentation": "@dev Access check: revert unless `msg.sender` is the owner of the contract.",
+            "id": 19025,
+            "name": "onlyOwner",
+            "nodeType": "ModifierDefinition",
+            "parameters": {
+              "id": 19014,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "220:2:37"
+            },
+            "src": "202:80:37",
+            "visibility": "internal"
+          }
+        ],
+        "scope": 19027,
+        "src": "63:221:37"
+      }
+    ],
+    "src": "0:285:37"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.10+commit.5a6ea5b1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.1",
+  "updatedAt": "2021-04-11T17:55:36.114Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

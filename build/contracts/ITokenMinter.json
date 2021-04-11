@@ -1,0 +1,475 @@
+{
+  "contractName": "ITokenMinter",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "mintReward",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "blockRewardContract",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "tokenContract",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"tokenContract\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"blockRewardContract\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"mintReward\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/interfaces/ITokenMinter.sol\":\"ITokenMinter\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/interfaces/ITokenMinter.sol\":{\"keccak256\":\"0xdbe88d3180d7235a591705f3e4b3f7742d02a95d84fddc6630a20cb3e1335a7c\",\"urls\":[\"bzzr://c194a0c800bc084b044f1d0718a0d766fec80767e8b775bb040f32e23fdcb246\",\"dweb:/ipfs/QmXvciv1p6H5ic9HVHQD7xirVFHcySRh1CtWrKdsLuXRZB\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity 0.5.10;\n\n\ninterface ITokenMinter {\n    // This function may only be called by BlockReward contract\n    function mintReward(uint256 _amount) external;\n\n    function blockRewardContract() external view returns(address);\n    function tokenContract() external view returns(address);\n}\n",
+  "sourcePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/interfaces/ITokenMinter.sol",
+  "ast": {
+    "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/interfaces/ITokenMinter.sol",
+    "exportedSymbols": {
+      "ITokenMinter": [
+        16533
+      ]
+    },
+    "id": 16534,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 16517,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:25"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 16533,
+        "linearizedBaseContracts": [
+          16533
+        ],
+        "name": "ITokenMinter",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 16522,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "mintReward",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16520,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16519,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16522,
+                  "src": "139:15:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16518,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "139:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "138:17:25"
+            },
+            "returnParameters": {
+              "id": 16521,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "164:0:25"
+            },
+            "scope": 16533,
+            "src": "119:46:25",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 16527,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "blockRewardContract",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16523,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "199:2:25"
+            },
+            "returnParameters": {
+              "id": 16526,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16525,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16527,
+                  "src": "224:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 16524,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "224:7:25",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "223:9:25"
+            },
+            "scope": 16533,
+            "src": "171:62:25",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 16532,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "tokenContract",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16528,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "260:2:25"
+            },
+            "returnParameters": {
+              "id": 16531,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16530,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16532,
+                  "src": "285:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 16529,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "285:7:25",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "284:9:25"
+            },
+            "scope": 16533,
+            "src": "238:56:25",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 16534,
+        "src": "26:270:25"
+      }
+    ],
+    "src": "0:297:25"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/akshaypatil/Documents/etherlite/pos-contracts/posdao-etherlite/contracts/interfaces/ITokenMinter.sol",
+    "exportedSymbols": {
+      "ITokenMinter": [
+        16533
+      ]
+    },
+    "id": 16534,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 16517,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:25"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 16533,
+        "linearizedBaseContracts": [
+          16533
+        ],
+        "name": "ITokenMinter",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 16522,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "mintReward",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16520,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16519,
+                  "name": "_amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16522,
+                  "src": "139:15:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 16518,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "139:7:25",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "138:17:25"
+            },
+            "returnParameters": {
+              "id": 16521,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "164:0:25"
+            },
+            "scope": 16533,
+            "src": "119:46:25",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 16527,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "blockRewardContract",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16523,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "199:2:25"
+            },
+            "returnParameters": {
+              "id": 16526,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16525,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16527,
+                  "src": "224:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 16524,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "224:7:25",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "223:9:25"
+            },
+            "scope": 16533,
+            "src": "171:62:25",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 16532,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "tokenContract",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 16528,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "260:2:25"
+            },
+            "returnParameters": {
+              "id": 16531,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 16530,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 16532,
+                  "src": "285:7:25",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 16529,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "285:7:25",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "284:9:25"
+            },
+            "scope": 16533,
+            "src": "238:56:25",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 16534,
+        "src": "26:270:25"
+      }
+    ],
+    "src": "0:297:25"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.10+commit.5a6ea5b1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.1",
+  "updatedAt": "2021-04-11T17:55:36.036Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
