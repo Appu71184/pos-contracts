@@ -32,12 +32,6 @@ contract TxPermission is UpgradeableOwned, ITxPermission {
     /// @dev The address of the `ValidatorSetAuRa` contract.
     IValidatorSetAuRa public validatorSetContract;
 
-    mapping(address => uint256) internal _deployerInputLengthLimit;
-
-    /// @dev The min gas price allowed for a specified sender, in Wei.
-    /// Zero means default min gas price.
-    mapping(address => uint256) public senderMinGasPrice;
-
     // ============================================== Constants =======================================================
 
     /// @dev A constant that defines a regular block gas limit.
@@ -47,18 +41,6 @@ contract TxPermission is UpgradeableOwned, ITxPermission {
     /// @dev A constant that defines a reduced block gas limit.
     /// Used by the `blockGasLimit` public getter.
     uint256 public constant BLOCK_GAS_LIMIT_REDUCED = 4000000;
-
-    // ================================================ Events ========================================================
-
-    /// @dev Emitted by the `setDeployerInputLengthLimit` function.
-    /// @param deployer The address of a contract deployer.
-    /// @param limit The maximum number of bytes in `input` field of deployment transaction.
-    event DeployerInputLengthLimitSet(address indexed deployer, uint256 limit);
-
-    /// @dev Emitted by the `setSenderMinGasPrice` function.
-    /// @param sender The address of transaction sender.
-    /// @param minGasPrice The min gas price in Wei. Zero to reset to default min gas price.
-    event SenderMinGasPriceSet(address indexed sender, uint256 minGasPrice);
 
     // ============================================== Modifiers =======================================================
 
@@ -120,24 +102,6 @@ contract TxPermission is UpgradeableOwned, ITxPermission {
         isSenderAllowed[_sender] = false;
     }
 
-    /// @dev Sets the limit of `input` transaction field length in bytes
-    /// for contract deployment transaction made by the specified deployer.
-    /// @param _deployer The address of a contract deployer.
-    /// @param _limit The maximum number of bytes in `input` field of deployment transaction.
-    /// Set it to zero to reset to default 24Kb limit defined by EIP 170.
-    function setDeployerInputLengthLimit(address _deployer, uint256 _limit) public onlyOwner onlyInitialized {
-        _deployerInputLengthLimit[_deployer] = _limit;
-        emit DeployerInputLengthLimitSet(_deployer, _limit);
-    }
-
-    /// @dev Sets the min gas price allowed for a specified sender.
-    /// @param _sender The address of transaction sender.
-    /// @param _minGasPrice The min gas price in Wei. Zero to reset to default min gas price.
-    function setSenderMinGasPrice(address _sender, uint256 _minGasPrice) public onlyOwner onlyInitialized {
-        senderMinGasPrice[_sender] = _minGasPrice;
-        emit SenderMinGasPriceSet(_sender, _minGasPrice);
-    }
-
     // =============================================== Getters ========================================================
 
     /// @dev Returns the contract's name recognizable by node's engine.
@@ -157,14 +121,14 @@ contract TxPermission is UpgradeableOwned, ITxPermission {
 
     /// @dev Returns the list of addresses allowed to initiate transactions of any type.
     /// For these addresses the `allowedTxTypes` getter always returns the `ALL` bit mask
-    /// (see https://openethereum.github.io/Permissioning.html#how-it-works-1).
+    /// (see https://openethereum.github.io/wiki/Permissioning.html#how-it-works-1).
     function allowedSenders() public view returns(address[] memory) {
         return _allowedSenders;
     }
 
     /// @dev Defines the allowed transaction types which may be initiated by the specified sender with
     /// the specified gas price and data. Used by node's engine each time a transaction is about to be
-    /// included into a block. See https://openethereum.github.io/Permissioning.html#how-it-works-1
+    /// included into a block. See https://openethereum.github.io/wiki/Permissioning.html#how-it-works-1
     /// @param _sender Transaction sender address.
     /// @param _to Transaction recipient address. If creating a contract, the `_to` address is zero.
     /// @param _value Transaction amount in wei.
@@ -192,11 +156,6 @@ contract TxPermission is UpgradeableOwned, ITxPermission {
         if (isSenderAllowed[_sender]) {
             // Let the `_sender` initiate any transaction if the `_sender` is in the `allowedSenders` list
             return (ALL, false);
-        }
-
-        if (_to == address(0) && _data.length > deployerInputLengthLimit(_sender)) {
-            // Don't let to deploy too big contracts
-            return (NONE, false);
         }
 
         // Get the called function's signature
@@ -264,11 +223,6 @@ contract TxPermission is UpgradeableOwned, ITxPermission {
             return (certifierContract.certifiedExplicitly(_sender) ? ALL : NONE, false);
         }
 
-        // Disallow invalid gas price for the specified sender
-        if (_gasPrice < senderMinGasPrice[_sender]) {
-            return (NONE, false);
-        }
-
         // In other cases let the `_sender` create any transaction with non-zero gas price
         return (ALL, false);
     }
@@ -282,19 +236,6 @@ contract TxPermission is UpgradeableOwned, ITxPermission {
             return BLOCK_GAS_LIMIT_REDUCED;
         }
         return BLOCK_GAS_LIMIT;
-    }
-
-    /// @dev Returns the limit of `input` transaction field length in bytes
-    /// for contract deployment transaction made by the specified deployer.
-    /// @param _deployer The address of a contract deployer.
-    function deployerInputLengthLimit(address _deployer) public view returns(uint256) {
-        uint256 limit = _deployerInputLengthLimit[_deployer];
-
-        if (limit != 0) {
-            return limit;
-        } else {
-            return 30720; // default EIP 170 limit (24 Kb + overhead)
-        }
     }
 
     /// @dev Returns a boolean flag indicating if the `initialize` function has been called.

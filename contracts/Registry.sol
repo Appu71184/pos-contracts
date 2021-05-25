@@ -23,9 +23,10 @@ contract Owned {
 }
 
 
-/// @dev Stores human-readable keys associated with addresses, like DNS information.
-/// Needed primarily to store the address of the `Certifier` contract (see
-/// https://openethereum.github.io/Service-transaction-checker-contract.html for details).
+/// @dev Stores human-readable keys associated with addresses, like DNS information
+/// (see https://openethereum.github.io/wiki/Parity-name-registry.html). Needed primarily to store the address
+/// of the `TxPermission` contract (see
+/// https://openethereum.github.io/wiki/Permissioning.html#transaction-type for details).
 contract Registry is Owned, IMetadataRegistry, IOwnerRegistry, IReverseRegistry {
     struct Entry {
         address owner;

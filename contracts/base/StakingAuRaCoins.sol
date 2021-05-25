@@ -18,17 +18,15 @@ contract StakingAuRaCoins is StakingAuRaBase {
 
     /// @dev Emitted by the `claimReward` function to signal the staker withdrew the specified
     /// amount of native coins from the specified pool for the specified staking epoch.
-    /// @param fromPoolStakingAddress A staking address of the pool from which the `staker` withdrew the amount.
+    /// @param fromPoolStakingAddress The pool from which the `staker` withdrew the amount.
     /// @param staker The address of the staker that withdrew the amount.
     /// @param stakingEpoch The serial number of the staking epoch for which the claim was made.
     /// @param nativeCoinsAmount The withdrawal amount of native coins.
-    /// @param fromPoolId An id of the pool from which the `staker` withdrew the amount.
     event ClaimedReward(
         address indexed fromPoolStakingAddress,
         address indexed staker,
         uint256 indexed stakingEpoch,
-        uint256 nativeCoinsAmount,
-        uint256 fromPoolId
+        uint256 nativeCoinsAmount
     );
 
     // =============================================== Setters ========================================================
@@ -41,30 +39,24 @@ contract StakingAuRaCoins is StakingAuRaBase {
     function claimReward(
         uint256[] memory _stakingEpochs,
         address _poolStakingAddress
-    ) public gasPriceIsValid onlyInitialized {
+    ) public onlyInitialized {
         address payable staker = msg.sender;
-        uint256 poolId = validatorSetContract.idByStakingAddress(_poolStakingAddress);
-
-        require(_poolStakingAddress != address(0));
-        require(staker != address(0));
-        require(poolId != 0);
-
-        address delegatorOrZero = (staker != _poolStakingAddress) ? staker : address(0);
         uint256 firstEpoch;
         uint256 lastEpoch;
 
         if (_poolStakingAddress != staker) { // this is a delegator
-            firstEpoch = stakeFirstEpoch[poolId][staker];
+            firstEpoch = stakeFirstEpoch[_poolStakingAddress][staker];
             require(firstEpoch != 0);
-            lastEpoch = stakeLastEpoch[poolId][staker];
+            lastEpoch = stakeLastEpoch[_poolStakingAddress][staker];
         }
 
         IBlockRewardAuRaCoins blockRewardContract = IBlockRewardAuRaCoins(validatorSetContract.blockRewardContract());
+        address miningAddress = validatorSetContract.miningByStakingAddress(_poolStakingAddress);
         uint256 rewardSum = 0;
         uint256 delegatorStake = 0;
 
         if (_stakingEpochs.length == 0) {
-            _stakingEpochs = IBlockRewardAuRa(address(blockRewardContract)).epochsPoolGotRewardFor(poolId);
+            _stakingEpochs = IBlockRewardAuRa(address(blockRewardContract)).epochsPoolGotRewardFor(miningAddress);
         }
 
         for (uint256 i = 0; i < _stakingEpochs.length; i++) {
@@ -73,7 +65,7 @@ contract StakingAuRaCoins is StakingAuRaBase {
             require(i == 0 || epoch > _stakingEpochs[i - 1]);
             require(epoch < stakingEpoch);
 
-            if (rewardWasTaken[poolId][delegatorOrZero][epoch]) continue;
+            if (rewardWasTaken[_poolStakingAddress][staker][epoch]) continue;
             
             uint256 reward;
 
@@ -90,19 +82,19 @@ contract StakingAuRaCoins is StakingAuRaBase {
                     break;
                 }
 
-                delegatorStake = _getDelegatorStake(epoch, firstEpoch, delegatorStake, poolId, staker);
+                delegatorStake = _getDelegatorStake(epoch, firstEpoch, delegatorStake, _poolStakingAddress, staker);
                 firstEpoch = epoch + 1;
 
-                reward = blockRewardContract.getDelegatorReward(delegatorStake, epoch, poolId);
+                reward = blockRewardContract.getDelegatorReward(delegatorStake, epoch, miningAddress);
             } else { // this is a validator
-                reward = blockRewardContract.getValidatorReward(epoch, poolId);
+                reward = blockRewardContract.getValidatorReward(epoch, miningAddress);
             }
 
             rewardSum = rewardSum.add(reward);
 
-            rewardWasTaken[poolId][delegatorOrZero][epoch] = true;
+            rewardWasTaken[_poolStakingAddress][staker][epoch] = true;
 
-            emit ClaimedReward(_poolStakingAddress, staker, epoch, reward, poolId);
+            emit ClaimedReward(_poolStakingAddress, staker, epoch, reward);
         }
 
         blockRewardContract.transferReward(rewardSum, staker);
@@ -121,28 +113,22 @@ contract StakingAuRaCoins is StakingAuRaBase {
         address _poolStakingAddress,
         address _staker
     ) public view returns(uint256 rewardSum) {
-        uint256 poolId = validatorSetContract.idByStakingAddress(_poolStakingAddress);
-
-        require(_poolStakingAddress != address(0));
-        require(_staker != address(0));
-        require(poolId != 0);
-
-        address delegatorOrZero = (_staker != _poolStakingAddress) ? _staker : address(0);
         uint256 firstEpoch;
         uint256 lastEpoch;
 
         if (_poolStakingAddress != _staker) { // this is a delegator
-            firstEpoch = stakeFirstEpoch[poolId][_staker];
+            firstEpoch = stakeFirstEpoch[_poolStakingAddress][_staker];
             require(firstEpoch != 0);
-            lastEpoch = stakeLastEpoch[poolId][_staker];
+            lastEpoch = stakeLastEpoch[_poolStakingAddress][_staker];
         }
 
         IBlockRewardAuRaCoins blockRewardContract = IBlockRewardAuRaCoins(validatorSetContract.blockRewardContract());
+        address miningAddress = validatorSetContract.miningByStakingAddress(_poolStakingAddress);
         uint256 delegatorStake = 0;
         rewardSum = 0;
 
         if (_stakingEpochs.length == 0) {
-            _stakingEpochs = IBlockRewardAuRa(address(blockRewardContract)).epochsPoolGotRewardFor(poolId);
+            _stakingEpochs = IBlockRewardAuRa(address(blockRewardContract)).epochsPoolGotRewardFor(miningAddress);
         }
 
         for (uint256 i = 0; i < _stakingEpochs.length; i++) {
@@ -151,7 +137,7 @@ contract StakingAuRaCoins is StakingAuRaBase {
             require(i == 0 || epoch > _stakingEpochs[i - 1]);
             require(epoch < stakingEpoch);
 
-            if (rewardWasTaken[poolId][delegatorOrZero][epoch]) continue;
+            if (rewardWasTaken[_poolStakingAddress][_staker][epoch]) continue;
 
             uint256 reward;
 
@@ -159,12 +145,12 @@ contract StakingAuRaCoins is StakingAuRaBase {
                 if (epoch < firstEpoch) continue;
                 if (lastEpoch <= epoch && lastEpoch != 0) break;
 
-                delegatorStake = _getDelegatorStake(epoch, firstEpoch, delegatorStake, poolId, _staker);
+                delegatorStake = _getDelegatorStake(epoch, firstEpoch, delegatorStake, _poolStakingAddress, _staker);
                 firstEpoch = epoch + 1;
 
-                reward = blockRewardContract.getDelegatorReward(delegatorStake, epoch, poolId);
+                reward = blockRewardContract.getDelegatorReward(delegatorStake, epoch, miningAddress);
             } else { // this is a validator
-                reward = blockRewardContract.getValidatorReward(epoch, poolId);
+                reward = blockRewardContract.getValidatorReward(epoch, miningAddress);
             }
 
             rewardSum += reward;
@@ -176,14 +162,13 @@ contract StakingAuRaCoins is StakingAuRaBase {
     /// @dev Sends coins from this contract to the specified address.
     /// @param _to The target address to send amount to.
     /// @param _amount The amount to send.
-    function _sendWithdrawnStakeAmount(address payable _to, uint256 _amount) internal gasPriceIsValid onlyInitialized {
+    function _sendWithdrawnStakeAmount(address payable _to, uint256 _amount) internal onlyInitialized {
         if (!_to.send(_amount)) {
             // We use the `Sacrifice` trick to be sure the coins can be 100% sent to the receiver.
             // Otherwise, if the receiver is a contract which has a revert in its fallback function,
             // the sending will fail.
             (new Sacrifice).value(_amount)(_to);
         }
-        lastChangeBlock = _getCurrentBlockNumber();
     }
 
     /// @dev The internal function used by the `stake` and `addPool` functions.
@@ -194,6 +179,10 @@ contract StakingAuRaCoins is StakingAuRaBase {
         address staker = msg.sender;
         _amount = msg.value;
         _stake(_toPoolStakingAddress, staker, _amount);
+    }
+
+    function transferStakingAmount(uint256 _totalAmount) public payable{
+        require(msg.value == _totalAmount);
     }
 
     /// @dev Returns the balance of this contract in staking coins.
