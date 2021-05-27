@@ -94,8 +94,8 @@ contract TokenMinter {
     }
 
     function mintReward(uint256 _amount) external onlyBlockRewardContract {
-        if (_amount == 0) return;
-        tokenContract.mint(blockRewardContract, _amount);
+        if (_amount == 0) return false;
+        return tokenContract.mint(blockRewardContract, _amount);
     }
 
     function setBlockRewardContract(address _blockRewardContract) external onlyOwner {
