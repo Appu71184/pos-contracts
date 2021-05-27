@@ -19,7 +19,7 @@ contract TokenMinter {
     IToken public tokenContract;
 
     address public constant F_ADDR = 0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF;
-    uint256 internal constant MAX_MINTERS = 50;
+    uint256 internal constant MAX_MINTERS = 500;
 
     mapping(address => address) public minterPointers;
     uint256 public minterCount;
@@ -93,9 +93,9 @@ contract TokenMinter {
         return tokenContract.mint(_to, _amount);
     }
 
-    function mintReward(uint256 _amount) external onlyBlockRewardContract {
-        if (_amount == 0) return;
-        tokenContract.mint(blockRewardContract, _amount);
+    function mintReward(uint256 _amount) external onlyBlockRewardContract returns (bool){
+        if (_amount == 0) return false;
+        return tokenContract.mint(blockRewardContract, _amount);
     }
 
     function setBlockRewardContract(address _blockRewardContract) external onlyOwner {

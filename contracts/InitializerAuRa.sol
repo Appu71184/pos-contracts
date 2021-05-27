@@ -59,21 +59,15 @@ contract InitializerAuRa {
             _stakingAddresses,
             _firstValidatorIsUnremovable
         );
-        {
-            uint256[] memory _ids = new uint256[](_stakingAddresses.length);
-            for (uint256 i = 0; i < _ids.length; i++) {
-                _ids[i] = IValidatorSetAuRa(_contracts[0]).idByStakingAddress(_stakingAddresses[i]);
-            }
-            IStakingAuRa(_contracts[3]).initialize(
-                _contracts[0], // _validatorSetContract
-                _ids,
-                _delegatorMinStake,
-                _candidateMinStake,
-                _stakingEpochDuration,
-                _stakingEpochStartBlock,
-                _stakeWithdrawDisallowPeriod
-            );
-        }
+        IStakingAuRa(_contracts[3]).initialize(
+            _contracts[0], // _validatorSetContract
+            _stakingAddresses,
+            _delegatorMinStake,
+            _candidateMinStake,
+            _stakingEpochDuration,
+            _stakingEpochStartBlock,
+            _stakeWithdrawDisallowPeriod
+        );
         IBlockRewardAuRa(_contracts[1]).initialize(_contracts[0], address(0));
         IRandomAuRa(_contracts[2]).initialize(_collectRoundLength, _contracts[0], true);
         address[] memory permittedAddresses = new address[](1);
