@@ -93,7 +93,7 @@ contract TokenMinter {
         return tokenContract.mint(_to, _amount);
     }
 
-    function mintReward(uint256 _amount) external onlyBlockRewardContract {
+    function mintReward(uint256 _amount) external onlyBlockRewardContract returns (bool){
         if (_amount == 0) return false;
         return tokenContract.mint(blockRewardContract, _amount);
     }
