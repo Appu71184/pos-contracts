@@ -249,8 +249,8 @@ contract TxPermission is UpgradeableOwned, ITxPermission {
     uint32 internal constant ALL = 0xffffffff;
     uint32 internal constant BASIC = 0x01;
     uint32 internal constant CALL = 0x02;
-    uint32 internal constant CREATE = 0x04;
-    uint32 internal constant PRIVATE = 0x08;
+    // uint32 internal constant CREATE = 0x04;
+    // uint32 internal constant PRIVATE = 0x08;
 
     // Function signatures
 
