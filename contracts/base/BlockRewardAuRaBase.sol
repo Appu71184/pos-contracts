@@ -345,7 +345,7 @@ contract BlockRewardAuRaBase is UpgradeableOwned, IBlockRewardAuRa {
 
     /// @dev Returns an identifier for the bridge contract so that the latter could
     /// ensure it works with the BlockReward contract.
-    function blockRewardContractId() public pure returns(bytes4) {
+    function blockRewardContractId() external pure returns(bytes4) {
         return 0x0d35a7ca; // bytes4(keccak256("blockReward"))
     }
 
